@@ -48,14 +48,14 @@ function(EmbedPTX)
   ## Create command to run the bin2c via the CMake script ##
 
   add_custom_command(
-    OUTPUT "${EMBED_PTX_OUTPUT_HEADER_FILE}"
+    OUTPUT ${EMBED_PTX_OUTPUT_HEADER_FILE}
     COMMAND ${CMAKE_COMMAND}
       "-DBIN_TO_C_COMMAND=${BIN_TO_C}"
       "-DOBJECTS=$<TARGET_OBJECTS:${EMBED_PTX_INPUT_TARGET}>"
       "-DOUTPUT=${EMBED_PTX_OUTPUT_HEADER_FILE}"
       -P ${EMBED_PTX_RUN}
     VERBATIM
-    DEPENDS ${EMBED_PTX_INPUT_TARGET}
+    DEPENDS $<TARGET_OBJECTS:${EMBED_PTX_INPUT_TARGET}> ${EMBED_PTX_INPUT_TARGET}
     COMMENT "Converting Object files to a C header"
   )
 
