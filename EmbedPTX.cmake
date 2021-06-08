@@ -47,6 +47,7 @@ function(EmbedPTX)
 
   ## Create command to run the bin2c via the CMake script ##
 
+  get_filename_component(OUTPUT_FILE_NAME ${EMBED_PTX_OUTPUT_HEADER_FILE} NAME)
   add_custom_command(
     OUTPUT ${EMBED_PTX_OUTPUT_HEADER_FILE}
     COMMAND ${CMAKE_COMMAND}
@@ -56,12 +57,12 @@ function(EmbedPTX)
       -P ${EMBED_PTX_RUN}
     VERBATIM
     DEPENDS $<TARGET_OBJECTS:${EMBED_PTX_INPUT_TARGET}> ${EMBED_PTX_INPUT_TARGET}
-    COMMENT "Converting Object files to a C header"
+    COMMENT "Generating embedded PTX header file: ${OUTPUT_FILE_NAME}"
   )
 
   ## Establish dependencies for consuming targets ##
 
-  get_filename_component(OUTPUT_DIR "${EMBED_PTX_OUTPUT_HEADER_FILE}" DIRECTORY)
+  get_filename_component(OUTPUT_DIR ${EMBED_PTX_OUTPUT_HEADER_FILE} DIRECTORY)
   foreach(OUT_TARGET ${EMBED_PTX_OUTPUT_TARGETS})
     target_include_directories(${OUT_TARGET} PRIVATE ${OUTPUT_DIR})
     target_sources(${OUT_TARGET} PRIVATE ${EMBED_PTX_OUTPUT_HEADER_FILE})
