@@ -31,6 +31,7 @@ function(EmbedPTX)
 
   get_filename_component(CUDA_COMPILER_BIN "${CMAKE_CUDA_COMPILER}" DIRECTORY)
   find_program(BIN_TO_C NAMES bin2c PATHS ${CUDA_COMPILER_BIN})
+  mark_as_advanced(BIN_TO_C)
   if(NOT BIN_TO_C)
     message(FATAL_ERROR
       "bin2c not found:\n"
@@ -41,6 +42,7 @@ function(EmbedPTX)
 
   set(CMAKE_PREFIX_PATH ${CMAKE_MODULE_PATH})
   find_file(EMBED_PTX_RUN EmbedPTXRun.cmake)
+  mark_as_advanced(EMBED_PTX_RUN)
   if(NOT EMBED_PTX_RUN)
     message(FATAL_ERROR "EmbedPTX.cmake and EmbedPTXRun.cmake must be on CMAKE_MODULE_PATH\n")
   endif()
